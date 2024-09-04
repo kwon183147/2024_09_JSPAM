@@ -1,0 +1,45 @@
+DROP DATABASE IF EXISTS 2024_09_jsp_am;
+CREATE DATABASE 2024_09_jsp_am;
+USE 2024_09_jsp_am;
+
+CREATE TABLE article(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+    , regDate DATETIME NOT NULL
+    , updateDate DATETIME NOT NULL
+    -- , memberId INT UNSIGNED NOT NULL
+    , title VARCHAR(100) NOT NULL
+    , `body` TEXT NOT NULL
+);
+
+ALTER TABLE article ADD COLUMN vCnt INT UNSIGNED NOT NULL DEFAULT 0;
+
+CREATE TABLE `member`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+    , regDate DATETIME NOT NULL
+    , updateDate DATETIME NOT NULL
+    , loginId VARCHAR(20) NOT NULL UNIQUE
+    , loginPw VARCHAR(20) NOT NULL
+    , `name` VARCHAR(20) NOT NULL
+);
+
+INSERT INTO article
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , title = '제목1'
+        , `body` = '내용1';
+
+INSERT INTO article
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , title = '제목2'
+        , `body` = '내용2';
+
+INSERT INTO article
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , title = '제목3'
+        , `body` = '내용3';
+
+
+SELECT * FROM article;
+SELECT * FROM `member`;
