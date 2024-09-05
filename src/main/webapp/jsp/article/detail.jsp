@@ -22,7 +22,8 @@
 	</div>
 
 	<div>
-		<a href="list">목록</a>
+		<div><a href="list">목록</a></div>
+		<div><a href="delete?id=<%= articleMap.get("id") %>">삭제</a></div>
 	</div>
 </body>
 </html>

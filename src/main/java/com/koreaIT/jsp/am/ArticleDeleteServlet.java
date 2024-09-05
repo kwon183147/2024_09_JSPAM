@@ -5,14 +5,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.koreaIT.jsp.am.util.DBUtil;
+import com.koreaIT.jsp.am.util.SecSql;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/dbTest")
-public class DBConnectTestServlet extends HttpServlet {
+@WebServlet("/article/delete")
+public class ArticleDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private final String URL = "jdbc:mysql://localhost:3306/2024_09_jsp_am?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
@@ -29,9 +32,16 @@ public class DBConnectTestServlet extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			System.out.println("연결 성공!");
+			int id = Integer.parseInt(request.getParameter("id"));
 
-			response.getWriter().append("연결 성공!!!");
+			SecSql sql = new SecSql();
+			sql.append("DELETE FROM article");
+			sql.append("WHERE id = ?", id);
+
+			DBUtil.delete(connection, sql);
+
+			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제되었습니다'); location.replace('list');</script>", id));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
