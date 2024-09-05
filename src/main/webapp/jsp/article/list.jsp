@@ -14,16 +14,12 @@
 <title>목록</title>
 </head>
 <body>
-	<!-- 절대경로 -->
-	<a href="<%= request.getContextPath() %>/home/printDan">테스트버튼</a>
-
-	<!-- 상대경로 -->
-	<a href="detail">테스트버튼2</a>
-
+	<div><a href="../home/main">메인</a></div>
+	
 	<div>게시물 리스트</div>
 	<ul>
 		<% for (Map<String, Object> articleMap : articleListMap) { %>
-			<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <%= articleMap.get("title") %></li>
+			<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <a href="detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></li>
 		<% } %>
 	</ul>
 
