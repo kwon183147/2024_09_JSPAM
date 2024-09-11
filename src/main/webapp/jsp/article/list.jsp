@@ -18,8 +18,10 @@
 <title>목록</title>
 </head>
 <body>
-	<div><a href="../home/main">메인</a></div>
-	
+	<div>
+		<div><a href="../home/main">메인</a></div>
+		<div><a href="write">글쓰기</a></div>
+	</div>
 	<div>게시물 리스트</div>
 	
 	<table border="1">
