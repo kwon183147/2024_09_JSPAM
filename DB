@@ -43,3 +43,8 @@ INSERT INTO article
 
 SELECT * FROM article;
 SELECT * FROM `member`;
+
+/*
+INSERT INTO article (regDate, updateDate, title, `body`)
+SELECT NOW(), NOW(), 'test1', 'test1' FROM article;
+*/

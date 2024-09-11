@@ -5,6 +5,10 @@
     
 <%
 	List<Map<String, Object>> articleListMap = (List<Map<String, Object>>) request.getAttribute("articleListMap");
+	int totalPageCnt = (int) request.getAttribute("totalPageCnt");
+	int cPage = (int) request.getAttribute("cPage");
+	int from = (int) request.getAttribute("from");
+	int end = (int) request.getAttribute("end");
 %>
 
 <!DOCTYPE html>
@@ -42,7 +46,36 @@
 		</tbody>
 	</table>
 
+	<style>
+			.red {
+				color: red;
+				font-size: 1.5rem;
+			}
+	</style>
 
+	<div>
+		<div>
+			<% if (from != 1) { %>
+				<a href="?cPage=1">&lt;&lt;</a>
+				<a href="?cPage=<%= from - 1 %>">◀</a>
+			<% } %>
+
+			<%
+				if (end > totalPageCnt) {
+					end = totalPageCnt;
+				}
+			%>
+
+			<% for (int i = from; i <= end; i++) { %>
+				<a class="<%= cPage == i ? "red" : "" %>" href="list?cPage=<%= i %>"><%= i %></a>
+			<% } %>
+
+			<% if (end != totalPageCnt) { %>
+				<a href="?cPage=<%= end + 1 %>">▶</a>
+				<a href="?cPage=<%= totalPageCnt %>">&gt;&gt;</a>
+			<% } %>
+		</div>
+	</div>
 
 </body>
 </html>
