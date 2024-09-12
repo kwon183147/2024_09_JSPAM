@@ -13,7 +13,28 @@
 <title>수정</title>
 </head>
 <body>
-	<form action="doModify" method="post">
+	<script>
+		const modifyFormSubmit = function(form) {
+			form.title.value = form.title.value.trim();
+			form.body.value = form.body.value.trim();
+			
+			if (form.title.value.length == 0) {
+				alert('제목을 입력해주세요');
+				form.title.focus();
+				return;
+			}
+			
+			if (form.body.value.length == 0) {
+				alert('내용을 입력해주세요');
+				form.body.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+	</script>
+
+	<form action="doModify" method="post" onsubmit="modifyFormSubmit(this); return false;">
 		<div>	
 			<input type="hidden" name="id" value="<%= articleMap.get("id") %>"/>
 			<div><%= articleMap.get("id") %>번 게시물 수정</div>
