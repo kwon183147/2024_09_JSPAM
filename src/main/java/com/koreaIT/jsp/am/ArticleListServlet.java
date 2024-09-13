@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.koreaIT.jsp.am.config.Config;
 import com.koreaIT.jsp.am.util.DBUtil;
 import com.koreaIT.jsp.am.util.SecSql;
 
@@ -20,16 +21,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ArticleListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private final String URL = "jdbc:mysql://localhost:3306/2024_09_jsp_am?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-	private final String USERNAME = "root";
-	private final String PASSWORD = "";
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			Class.forName(Config.getDBDriverName());
+			connection = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUsr(), Config.getDBUsrPw());
 			
 			int cPage = 1;
 			if (request.getParameter("cPage") != null && request.getParameter("cPage").length() != 0) {
