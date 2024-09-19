@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/doWrite")
 public class ArticleDoWriteServlet extends HttpServlet {
@@ -25,6 +26,8 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
+		
+		HttpSession session = request.getSession();
 
 		Connection connection = null;
 
@@ -36,6 +39,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			sql.append("INSERT INTO article");
 			sql.append("SET regDate = NOW()");
 			sql.append(", updateDate = NOW()");
+			sql.append(", memberId = ?", (int) session.getAttribute("loginedMemberId"));
 			sql.append(", title = ?", title);
 			sql.append(", `body` = ?", body);
 

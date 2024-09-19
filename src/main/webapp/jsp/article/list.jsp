@@ -20,7 +20,12 @@
 <body>
 	<div>
 		<div><a href="../home/main">메인</a></div>
-		<div><a href="write">글쓰기</a></div>
+				
+		<%@ include file="/jsp/common/topBar.jsp" %>
+		
+		<% if (loginedMemberId != -1) { %>
+			<div><a href="write">글쓰기</a></div>
+		<% } %>
 	</div>
 	<div>게시물 리스트</div>
 	
@@ -29,12 +34,14 @@
 			<col />
 			<col width="200" />
 			<col width="100" />
+			<col />
 		</colgroup>
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>작성일</th>
 				<th>제목</th>
+				<th>작성자</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,6 +50,7 @@
 					<td><%= articleMap.get("id") %></td>
 					<td><%= articleMap.get("regDate") %></td>
 					<td><a href="detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></td>
+					<td><%= articleMap.get("writerName") %></td>
 				</tr>
 			<% } %>
 		</tbody>

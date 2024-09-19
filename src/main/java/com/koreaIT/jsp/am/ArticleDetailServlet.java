@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
@@ -30,10 +31,23 @@ public class ArticleDetailServlet extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			SecSql sql = new SecSql();
-			sql.append("SELECT * FROM article");
-			sql.append("WHERE id = ?", id);
+			sql.append("SELECT A.*, M.loginId `writerName`");
+			sql.append("FROM article A");
+			sql.append("INNER JOIN `member` M");
+			sql.append("ON A.memberId = M.id");
+			sql.append("WHERE A.id = ?", id);
 
 			Map<String, Object> articleMap = DBUtil.selectRow(connection, sql);
+			
+			HttpSession se = request.getSession();
+			
+			int loginedMemberId = -1;
+			
+			if (se.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) se.getAttribute("loginedMemberId");
+			}
+			
+			request.setAttribute("loginedMemberId", loginedMemberId);
 
 			request.setAttribute("articleMap", articleMap);
 
